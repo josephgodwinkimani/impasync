@@ -1,34 +1,23 @@
-# IMAPSync use on Windows or Linux using Python 3
+# IMAPSync use on Windows or Linux using Go
 
-> Prepare Virtual Environment before commencing
-
-1. Install python 3.9 dependencies:
+1. Build image and Setup docker container
 
 ```bash
-$ pip install -r requirements.txt
+$ docker build -t imapsync-goapi .
+$ docker run -d -p 8080:8000 --name my-imapsync-goapi imapsync-goapi
 ```
 
-2. Run the API
-
-```bash
-$ uvicorn app:app --host 127.0.0.1 --port 8000
-```
-
-3. Test the API
+Test the API
 
 ```
-curl -X POST http://127.0.0.1:8000/sync \
+curl -X POST http://localhost:8000/sync \
 -H "Content-Type: application/json" \
 -d '{
-    "source": {
-        "host": "source.imap.server",
-        "user": "sourceuser",
-        "password": "sourcepassword"
-    },
-    "destination": {
-        "host": "destination.imap.server",
-        "user": "destinationuser",
-        "password": "destinationpassword"
-    }
+  "host1": "source.imap.server",
+  "user1": "sourceuser",
+  "password1": "sourcepassword",
+  "host2": "destination.imap.server",
+  "user2": "destinationuser",
+  "password2": "destinationpassword"
 }'
 ```
